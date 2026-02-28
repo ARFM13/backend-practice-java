@@ -20,20 +20,21 @@ import java.util.Scanner;
 
               // Decision Logic (IF - ELSE Structure)
               if (years < 2) {
-                  rank = "Junior (You are just starting your journey!)";
+                  rank = "Junior (Their journey has only just begun!)";
               } else if (years >= 2 && years < 5) {
-                  rank = "mid-level (You have a solid traack record";
+                  rank = "mid-level (It has a solid track record)";
               } else {
-                  rank = "Senior (You are an expert)";
+                  rank = "Senior (He's an expert.)";
               }
 
               System.out.println("\n--- ANALYSIS RESULT ---\n");
               System.out.println("Developer: " + name);
               System.out.println("Main Language: " + MainLanguage);
               System.out.println("Assigned Rank: " + rank);
-              System.out.println("\n--- ANALYSIS COMPLETE---");
+
           } catch (NumberFormatException e) {
               System.out.println(("\n[ERROR]: Please enter a valid NUMBER for years of experience."));
+
           }
       }
 
@@ -72,7 +73,27 @@ import java.util.Scanner;
           for (Programador p : teamList) {
               p.evaluateProfile();// This calls the analysis for each one
           }
+          // --- SEARCH FEATURE ---
+          System.out.println("\n--- Search Developer by Name ---");
+          System.out.println("Enter the name you want to find: ");
+          String searchName = lector.nextLine();
 
-          System.out.println("===============================\n");
+          boolean found = false;
+
+          for (Programador p : teamList) {
+              // .equalsIgnoreCase ignores if it's uppercase or lowercase
+              if (p.name.equalsIgnoreCase(searchName)) {
+                  System.out.println("\n[MATCH FOUND]:");
+                  p.evaluateProfile();
+                  found = true;
+                  break;// We stop searching once we find it
+              }
+          }
+
+          if (!found) {
+              System.out.println("\n[NOT FOUND]: The developer '" + searchName + "' is not in the list.");
+          }
+
+                  System.out.println("===============================\n");
       }
   }
