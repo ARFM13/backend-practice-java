@@ -8,24 +8,38 @@ import java.util.Scanner;
 
       void evaluateProfile() {
           // We convert the String to an integer to perform comparisons
-          int years = Integer.parseInt(yearsOfExperience);
-          String rank;
+          try {
 
-          // Decision Logic (IF - ELSE Structure)
-          if (years < 2) {
-              rank = "Junior (You are just starting your journey!)";
-          } else if (years >= 2 && years < 5) {
-              rank = "mid-level (You have a solid traack record";
-          } else {
-              rank = "Senior (You are an expert)";
+              int years = Integer.parseInt(yearsOfExperience);
+              String rank;
+              if (years < 0) {
+                  System.out.println("Error: Experience cannot be negative.");
+                  return; //We exit the method if the data is invalid.
+              }
+
+              // Decision Logic (IF - ELSE Structure)
+              if (years < 2) {
+                  rank = "Junior (You are just starting your journey!)";
+              } else if (years >= 2 && years < 5) {
+                  rank = "mid-level (You have a solid traack record";
+              } else {
+                  rank = "Senior (You are an expert)";
+              }
+
+              System.out.println("\n--- ANALYSIS RESULT ---\n");
+              System.out.println("Developer: " + name);
+              System.out.println("Main Language: " + MainLanguage);
+              System.out.println("Assigned Rank: " + rank);
+              System.out.println("\n--- ANALYSIS COMPLETE---");
+          }catch(NumberFormatException e){
+              System.out.println(("\n[ERROR]: Please enter a valid NUMBER for years of experience."));
           }
-
-          System.out.println("\n--- ANALYSIS RESULT ---\n");
-          System.out.println("Developer: " + name);
-          System.out.println("Main Language: " + MainLanguage);
-          System.out.println("Assigned Rank: " + rank);
-          System.out.println("\n--- ANALYSIS COMPLETE---");
       }
+
+
+
+
+
       public static void  main(String[] args) {
           Scanner lector = new Scanner(System.in);
 
