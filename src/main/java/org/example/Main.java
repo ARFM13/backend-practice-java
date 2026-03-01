@@ -27,10 +27,10 @@ public class Main {
                 ));
             }
             if (!teamList.isEmpty()) {
-                System.out.println("📂 [SISTEMA]: Se han cargado " + teamList.size() + " programadores previos.");
+                System.out.println("[SISTEMA]: Se han cargado " + teamList.size() + " programadores previos.");
             }
         } catch (SQLException e) {
-            System.out.println("⚠️ No hay datos previos o la tabla está vacía.");
+            System.out.println("No hay datos previos o la tabla está vacía.");
         }
         System.out.println("=== WELCOME TO THE DEV MANAGER 2.0 ===");
 
@@ -55,10 +55,10 @@ public class Main {
                     pstmt.setString(2, l);
                     pstmt.setString(3, y);
                     pstmt.executeUpdate();
-                    System.out.println("💾 [DB]: ¡" + n + " guardado en Fedora!");
+                    System.out.println("[DB]: ¡" + n + " guardado en Fedora!");
                 }
             } catch (SQLException e) {
-                System.out.println("❌ Error al guardar en DB: " + e.getMessage());
+                System.out.println("Error al guardar en DB: " + e.getMessage());
             }
 
             System.out.println("Add another? (y/n): ");
