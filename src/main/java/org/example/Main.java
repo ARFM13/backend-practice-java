@@ -5,21 +5,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/dev_manager";
-        String user = "root";
-        String pass = "root";
+    // 1. Ponemos las credenciales aquí arriba para que TODO el código las vea
+    private static final String URL = "jdbc:mysql://localhost:3306/dev_manager";
+    private static final String USER = "root";
+    private static final String PASS = "root";
 
+    public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         ArrayList<Programador> teamList = new ArrayList<>();
-// --- CARGA INICIAL DESDE MYSQL ---
-        try (Connection connection = DriverManager.getConnection(url, user, pass)) {
+
+        // --- CARGA INICIAL DESDE MYSQL ---
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
             String sql = "SELECT name, language, experience FROM developers";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                // Llenamos nuestra lista con lo que ya existe en la DB
                 teamList.add(new Programador(
                         rs.getString("name"),
                         rs.getString("language"),
@@ -32,10 +33,13 @@ public class Main {
         } catch (SQLException e) {
             System.out.println("No hay datos previos o la tabla está vacía.");
         }
+
         System.out.println("=== WELCOME TO THE DEV MANAGER 2.0 ===");
 
         // --- BUCLE DE REGISTRO E INSERCIÓN ---
-        String op = "y";
+        System.out.println("Add a new developer? (y/n): ");
+        String op = reader.nextLine();
+
         while (op.equalsIgnoreCase("y")) {
             System.out.println("\nName: ");
             String n = reader.nextLine();
@@ -44,11 +48,9 @@ public class Main {
             System.out.println("Years: ");
             String y = reader.nextLine();
 
-            // 1. Guardar en la lista local (RAM)
             teamList.add(new Programador(n, l, y));
 
-            // 2. Guardar en MySQL (Persistencia)
-            try (Connection connection = DriverManager.getConnection(url, user, pass)) {
+            try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
                 String sql = "INSERT INTO developers (name, language, experience) VALUES (?, ?, ?)";
                 try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                     pstmt.setString(1, n);
@@ -85,11 +87,37 @@ public class Main {
                 break;
             }
         }
-
         if (!found) {
             System.out.println("\n[NOT FOUND]: The developer '" + searchName + "' is not in the list.");
         }
 
+        // --- FUNCIÓN DE BORRADO ---
+        System.out.println("\n--- Delete Developer ---");
+        System.out.println("Enter the name to delete (or press Enter to skip): ");
+        String toDelete = reader.nextLine();
+        if (!toDelete.isEmpty()) {
+            deleteDeveloper(toDelete);
+        }
+
         System.out.println("\n===============================");
+    } // AQUÍ CIERRA EL MAIN
+
+    // 2. EL MÉTODO DELETE FUERA DEL MAIN PERO DENTRO DE LA CLASE
+    private static void deleteDeveloper(String name) {
+        String sql = "DELETE FROM developers WHERE name = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("❌ Developer '" + name + "' deleted successfully from DB.");
+            } else {
+                System.out.println("⚠️ No developer found with that name in DB.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error deleting developer: " + e.getMessage());
+        }
     }
-}
+} // AQUÍ CIERRA LA CLASE
