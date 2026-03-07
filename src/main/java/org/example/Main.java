@@ -33,18 +33,18 @@ public class Main {
 
             switch (option) {
                 case "1":
-                    // Ver lista
                     List<Programador> teamList = dao.getAll();
                     System.out.println("\n--- CURRENT TEAM ---");
                     for (Programador p : teamList) {
-                        p.evaluateProfile();
+                        p.printBasicInfo(); // <--- CAMBIO AQUÍ
                     }
                     break;
-
                 case "2":
                 // Agregar
                 System.out.print("Name: ");
                 String n = reader.nextLine();
+                    // Truco para poner la primera en Mayúscula:
+                    n = n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase();
 
                 System.out.print("Language: ");
                 String l = reader.nextLine();
@@ -58,21 +58,19 @@ public class Main {
                 break;
 
                 case "3":
-                    // Buscar (Lo hacemos filtrando la lista del DAO)
                     System.out.print("Enter name to find: ");
                     String searchName = reader.nextLine();
                     List<Programador> all = dao.getAll();
                     boolean found = false;
                     for (Programador p : all) {
-                        if (p.name.equalsIgnoreCase(searchName)) {
-                            p.evaluateProfile();
+                        if (p.getName().equalsIgnoreCase(searchName)) {
+                            p.evaluateProfile(); // <--- AQUÍ SÍ USAMOS EL ANÁLISIS
                             found = true;
                             break;
                         }
                     }
                     if (!found) System.out.println("Developer not found.");
                     break;
-
                 case "4":
                     // Borrar
                     System.out.print("Enter name to delete: ");

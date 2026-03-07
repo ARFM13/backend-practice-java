@@ -37,10 +37,13 @@ public class DeveloperDAO {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, p.name);
-            pstmt.setString(2, p.MainLanguage);
-            pstmt.setString(3, p.yearsOfExperience);
+            pstmt.setString(1, p.getName());
+            pstmt.setString(2, p.getLanguage());
+            pstmt.setString(3, p.getExperience());
+
+            // ¡ESTA LÍNEA ES CLAVE! Sin ella, los datos no se guardan
             pstmt.executeUpdate();
+
             System.out.println("[DB]: Saved successfully!");
         } catch (SQLException e) {
             System.out.println("Error saving: " + e.getMessage());
