@@ -4,6 +4,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static int leerEntero(Scanner reader) {
+        while (true) {
+            try {
+                return Integer.parseInt(reader.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.print("⚠️ Invalid input. Please enter a number: ");
+            }
+        }
+    }
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         DeveloperDAO dao = new DeveloperDAO();
@@ -25,7 +34,7 @@ public class Main {
             switch (option) {
                 case "1":
                     // Ver lista
-                    List<Programador> teamList = dao.getAll1();
+                    List<Programador> teamList = dao.getAll();
                     System.out.println("\n--- CURRENT TEAM ---");
                     for (Programador p : teamList) {
                         p.evaluateProfile();
@@ -33,12 +42,20 @@ public class Main {
                     break;
 
                 case "2":
-                    // Agregar
-                    System.out.print("Name: "); String n = reader.nextLine();
-                    System.out.print("Language: "); String l = reader.nextLine();
-                    System.out.print("Years: "); String y = reader.nextLine();
-                    dao.save(new Programador(n, l, y));
-                    break;
+                // Agregar
+                System.out.print("Name: ");
+                String n = reader.nextLine();
+
+                System.out.print("Language: ");
+                String l = reader.nextLine();
+
+                System.out.print("Years of experience: ");
+                // Aquí usamos nuestro nuevo validador
+                int y = leerEntero(reader);
+
+                // Convertimos el int a String para que tu clase Programador no proteste
+                dao.save(new Programador(n, l, String.valueOf(y)));
+                break;
 
                 case "3":
                     // Buscar (Lo hacemos filtrando la lista del DAO)
