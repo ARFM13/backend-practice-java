@@ -1,12 +1,15 @@
 # 🚀 Dev Manager 2.0 - Java & MySQL
 
-A robust developer management system built with **Java 21**, using **Maven** for dependency management and **MySQL/MariaDB** (running on Fedora) for data persistence.
+A robust developer management system built with **Java 21**, using **Maven** for dependency management and **MySQL/MariaDB** (running on Fedora) for data persistence. This version implements the **DAO (Data Access Object)** pattern for professional database management.
 
 ## ✨ Key Features
+- **Full CRUD Support:** Create, Read, Update, and Delete developers directly from the console.
 - **Real-Time Persistence:** All data is stored and retrieved from a MariaDB/MySQL database.
-- **Smart Search:** Quickly locate developers by name within the system.
-- **Automated Data Loading:** The program synchronizes with the DB upon startup to restore the last state.
-- **Profile Evaluation:** Built-in logic to categorize developers based on their experience levels.
+- **Smart Search & Analysis:** Quickly locate developers and get an automated rank evaluation (Junior, Mid, Senior).
+- **Data Validation:** Robust input handling to prevent crashes when entering experience years.
+- **DAO Architecture:** Clean separation between the database logic and the user interface.
+
+
 
 ## 🛠️ Requirements & Stack
 - **Language:** Java 21 (OpenJDK)
