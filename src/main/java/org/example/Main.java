@@ -27,7 +27,8 @@ public class Main {
             System.out.println("3. Search developer by name");
             System.out.println("4. Delete developer");
             System.out.println("5. Update developer");
-            System.out.println("6. Exit");
+            System.out.println("6. Filter by language");
+            System.out.println("7. Exit");
             System.out.print("Select an option: ");
 
             String option = reader.nextLine();
@@ -94,6 +95,27 @@ public class Main {
                     break;
 
                 case "6":
+                    // Filtrar por Lenguaje
+                    System.out.print("Enter the language to filter: ");
+                    String langFilter = reader.nextLine();
+
+                    List<Programador> filteredList = dao.getByLanguage(langFilter);
+
+                    System.out.println("\n--- SEARCH RESULTS FOR: " + langFilter.toUpperCase() + " ---");
+
+                    if (filteredList.isEmpty()) {
+                        System.out.println("No developers found specialized in " + langFilter + ".");
+                    } else {
+                        for (Programador p : filteredList) {
+                            // Usamos el método de info básica para que salga uno debajo de otro
+                            p.printBasicInfo();
+                        }
+                        System.out.println("Total found: " + filteredList.size());
+                    }
+                    System.out.println("--------------------------------------------");
+                    break;
+
+                case "7":
                     System.out.println("Goodbye!");
                     exit = true;
                     break;
