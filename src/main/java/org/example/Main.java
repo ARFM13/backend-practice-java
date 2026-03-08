@@ -26,7 +26,8 @@ public class Main {
             System.out.println("2. Add new developer");
             System.out.println("3. Search developer by name");
             System.out.println("4. Delete developer");
-            System.out.println("5. Exit");
+            System.out.println("5. Update developer");
+            System.out.println("6. Exit");
             System.out.print("Select an option: ");
 
             String option = reader.nextLine();
@@ -71,6 +72,7 @@ public class Main {
                     }
                     if (!found) System.out.println("Developer not found.");
                     break;
+
                 case "4":
                     // Borrar
                     System.out.print("Enter name to delete: ");
@@ -79,9 +81,23 @@ public class Main {
                     break;
 
                 case "5":
+                    System.out.print("Enter the name of the dev to update: ");
+                    String nameToUpdate = reader.nextLine();
+
+                    System.out.print("New Language: ");
+                    String newLang = reader.nextLine();
+
+                    System.out.print("New Years of Experience: ");
+                    int newY = leerEntero(reader); // Usamos tu validador de ayer
+
+                    dao.update(nameToUpdate, newLang, String.valueOf(newY));
+                    break;
+
+                case "6":
                     System.out.println("Goodbye!");
                     exit = true;
                     break;
+
 
                 default:
                     System.out.println("Invalid option, try again.");

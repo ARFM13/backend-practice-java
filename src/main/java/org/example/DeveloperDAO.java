@@ -64,4 +64,25 @@ public class DeveloperDAO {
             System.out.println("Error deleting: " + e.getMessage());
         }
     }
+
+    // Método para actualizar
+    public void update (String name, String newLanguage, String newExp) {
+        String sql = "UPDATE developers SET language = ?, experience = ? WHERE name = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newLanguage);
+            pstmt.setString(2, newExp);
+            pstmt.setString(3, name);
+
+            int rows = pstmt.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Developer updated successfully!");
+            } else {
+                System.out.println("Developer not found.");
+            }
+        }catch (SQLException e){
+            System.out.println("Update error: " + e.getMessage());
+        }
+    }
 }
