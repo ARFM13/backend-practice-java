@@ -1,0 +1,25 @@
+package com.devmanager.dev_service.controller;
+
+import com.devmanager.dev_service.model.Developer;
+import com.devmanager.dev_service.repository.DeveloperRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/developers")
+public class DeveloperController {
+
+    @Autowired
+    private DeveloperRepository repository;
+
+    @GetMapping
+    public List<Developer> getAll() {
+        return repository.findAll();
+    }
+    @PostMapping
+    public Developer create(@RequestBody Developer dev) {
+        return repository.save(dev);
+    }
+}
