@@ -22,4 +22,8 @@ public class DeveloperController {
     public Developer create(@RequestBody Developer dev) {
         return repository.save(dev);
     }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
 }
