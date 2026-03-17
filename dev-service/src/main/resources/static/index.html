@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevManager Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1><i class="fas fa-laptop-code"></i> DevManager Admin</h1>
+
+    <div class="tabs">
+        <button class="tab-btn active" id="btn-tab-devs" onclick="showTab('devs')">
+            <i class="fas fa-code"></i> Desarrolladores
+        </button>
+        <button class="tab-btn" id="btn-tab-teams" onclick="showTab('teams')">
+            <i class="fas fa-users"></i> Equipos
+        </button>
+    </div>
+
+    <div id="section-devs" class="section active">
+        <div class="card">
+            <h3><span id="form-title">Registrar</span> Dev</h3>
+            <input type="hidden" id="edit-id">
+            <input type="text" id="dev-name" placeholder="Nombre y Apellido">
+            <input type="text" id="dev-lang" placeholder="Lenguaje">
+            <select id="dev-team-select"></select>
+            <button onclick="saveDev()" id="btn-save">Guardar Desarrollador</button>
+            <button onclick="resetForm()" id="btn-cancel" style="display:none; background:#64748b">Cancelar</button>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search" placeholder="Buscar..." onkeyup="filterDevs()">
+        </div>
+        <div class="card"><div id="devs-list"></div></div>
+    </div>
+
+    <div id="section-teams" class="section">
+        <div class="card">
+            <h3>Nuevo Equipo</h3>
+            <input type="text" id="team-name" placeholder="Nombre del Equipo">
+            <button onclick="createTeam()" class="btn-success">Crear Equipo</button>
+        </div>
+        <div class="card"><h3>Equipos Existentes</h3><div id="teams-list"></div></div>
+    </div>
+</div>
+
+<div id="delete-team-modal" class="modal">
+    <div class="modal-content">
+        <h3>Reubicar Miembros</h3>
+        <p>¿Qué hacer con los desarrolladores?</p>
+        <button onclick="reubicarDevs(null)" class="btn-secondary">Dejarlos sin equipo</button>
+        <div class="relocate-box">
+            <select id="modal-team-select"></select>
+            <button onclick="reubicarDevs(document.getElementById('modal-team-select').value)" class="btn-success">Mover y Borrar</button>
+        </div>
+        <button onclick="closeModal()" style="background:#94a3b8">Cancelar</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

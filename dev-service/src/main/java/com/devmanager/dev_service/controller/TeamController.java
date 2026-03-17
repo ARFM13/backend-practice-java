@@ -3,7 +3,8 @@ package com.devmanager.dev_service.controller;
 import com.devmanager.dev_service.model.Team;
 import com.devmanager.dev_service.repository.TeamRepository;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,13 @@ public class TeamController {
     @GetMapping
     public List<Team> getAll() {
         return repository.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {
+        // Usamos 'repository' porque es lo que declaraste arriba
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping
